@@ -16,17 +16,22 @@
 }
 .container {
     position: relative;
-    width: 1200px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     margin: 0px auto;
 }
-/* 
+ 
 #content{
     display: flex;
     flex-wrap: wrap;
     row-gap: 10px;
     column-gap: 2em;
-} */
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    padding-left: 5rem;
+
+} 
 
 .container .box {
     position: relative;
@@ -158,10 +163,4 @@
 
 .container .box:hover #link {
     color: #B8DBD9;
-}
-
-#end-line {
-    width: 100%;
-    color: #ffffff;
-    text-align: center;
 }

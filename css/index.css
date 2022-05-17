@@ -12,7 +12,8 @@
     display: flex;
     border: 1px;
     padding-top: 3rem;
-    padding-left: 10rem;
+    padding-left: 3rem;
+    text-align: center;
     align-self: center;
 }
 
@@ -115,7 +116,7 @@
 }
 
 
-.fa {
+.fa{
     padding: 20px;
     font-size: 30px;
     width: 50px;

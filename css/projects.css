@@ -1,0 +1,160 @@
+#main-content {
+    padding: 50px;
+    font-family: "Epilogue",
+        serif;
+    align-items: center;
+    align-content: center;
+}
+
+#heading {
+    color: #666666;
+    font-size: 50px;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+}
+.container {
+    position: relative;
+    width: 1200px;
+    height: 300px;
+    margin: 0px auto;
+}
+
+.container .box {
+    position: relative;
+    width: calc(400px - 30px);
+    height: calc(400px - 30px);
+    background: #2F4550;
+    float: left;
+    margin: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.container .box .icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+    z-index: 1;
+
+}
+
+.container .project1 .icon {
+    background-image: url(../images/img1.png);
+}
+
+.container .project2 .icon {
+    background-image: url(../images/img2.jpg);
+}
+
+.container .project3 .icon {
+    background-image: url(../images/img3.jpg);
+}
+
+
+.container .box:hover .icon {
+    top: 20px;
+    left: calc(50% - 10%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.container .project1 .icon .fa-solid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    transition: 0.5s;
+    color: #72f2ee;
+
+}
+
+.container .project2 .icon .fa-solid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    transition: 0.5s;
+    color: #2f4a50;
+
+}
+
+.container .project3 .icon .fa-brands {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    transition: 0.5s;
+    color: #0a6c9d;
+
+}
+
+.container .box:hover .icon .fa-solid {
+    font-size: 30px;
+
+}
+
+.container .box:hover .content {
+    position: absolute;
+    top: 100%;
+    height: calc(100% - 100px);
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.container .box:hover .content {
+    top: 100px;
+    opacity: 1;
+}
+
+.container .box .content h3 {
+    margin: 0 0 10px;
+    padding: 0;
+    color: #2F4550;
+    font-size: 24px;
+}
+
+.container .box:hover .content h3 {
+    margin: 0 0 10px;
+    padding: 0;
+    color: #B8DBD9;
+    font-size: 24px;
+}
+
+.container .box .content p {
+    margin: 0;
+    padding: 0;
+    color: #2F4550;
+}
+
+.container .box:hover .content p {
+    margin: 0;
+    padding: 0;
+    color: #B8DBD9;
+}
+
+#link {
+    color: #2F4550;
+}
+
+.container .box:hover #link {
+    color: #B8DBD9;
+}
+
+#end-line {
+    width: 100%;
+    color: #ffffff;
+    text-align: center;
+}

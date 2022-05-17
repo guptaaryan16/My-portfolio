@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/contact.css">
+</head>
+
+<body>
+    <div class="header">
+        <span id="header">Portfolio</span>
+        <div id="mainmenu">
+            <pre><a href="./index.html"><span id = "mainmenu"><u>Home</u></span></a>   <a href="./about.html"><span id="mainmenu"><u>About</u></span></a>   <a href="./projects.html"><span id = mainmenu><u>Projects</u></span></a>  <a href="./contact.html"><span id="pageopen"><u>Contact</u></span></a>      </pre>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <h1 id = "heading">Contact Me</h1>
+            <form action="mailto:sample-email.com"
+            method="POST"
+            enctype="multipart/form-data"
+            name="EmailForm">
+                <label for="name" id="text" >Name </label>
+                <input type="text" id="name">
+                <br>
+                <label for="email" id = "text">Email </label>
+                <input type="email" id="email">
+                <br>
+                <strong>
+                    <p id="text">Message</p>
+                </strong>
+                <textarea name="Description" cols="40" rows="20" aria-setsize="18" placeholder="Your message" id="description-text"></textarea>
+                <br>
+                <br>
+                <button type="submit"><h4>Submit</h4></button>
+    </div>
+
+</body>
+
+</html>

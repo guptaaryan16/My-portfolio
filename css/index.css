@@ -1,0 +1,132 @@
+
+.header{
+    padding-top: 2rem;
+}
+
+#inline-block {
+    display: inline-block;
+    align-items: center;
+}
+
+#content{
+    display: flex;
+    border: 1px;
+    padding-top: 3rem;
+    padding-left: 10rem;
+    align-self: center;
+}
+
+
+#cover-img{
+    overflow: visible;
+    aspect-ratio: 0.7983104540654699 / 1;
+    border-radius:20px;
+}
+
+#cover-photo{
+    flex: 1;
+    border: 2px;
+    margin: 10px;
+    width: 50vw;
+    padding: 30px;
+    margin-left: 10px;
+    align-items: center;
+}
+
+.cover-text {
+    margin-right: 20px;
+    align-content: right;
+    width: 50vw;
+    text-align: center;
+    padding-top: 25vh;
+    
+}
+
+#name-description {
+    font-weight: 700;
+    font-style: normal;
+    font-family:"Epilogue",
+        serif;
+    color: #ffffff;
+    font-size: 48px;
+    letter-spacing: 0px;
+    line-height: 1;
+    text-align: center;
+    overflow: hidden;
+        /* Ensures the content is not revealed until the animation */
+        border-right: .15em solid #666666;
+        /* The typwriter cursor */
+        white-space: nowrap;
+        /* Keeps the content on a single line */
+        margin: 0 auto;
+        /* Gives that scrolling effect as the typing happens */
+        letter-spacing: 0em;
+        /* Adjust as needed */
+        animation:
+            typing 2.5s steps(30, end),
+            blink-caret .75s step-end infinite;
+}
+#sub-description {
+    font-weight: 700;
+    font-style: normal;
+    font-family: "Epilogue",
+        serif;
+    color: #ffffff;
+    font-size: 30px;
+    letter-spacing: 0px;
+    line-height: 1;
+    text-align: center;
+    /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid #666666;
+    /* The typwriter cursor */
+    white-space: nowrap;
+    /* Keeps the content on a single line */
+    margin: 0 auto;
+    /* Gives that scrolling effect as the typing happens */
+    letter-spacing: 0em;
+    /* Adjust as needed */
+    animation:
+        typing-2 2.5s steps(100, end),
+        blink-caret-2 .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 50%
+    }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #666666;
+    }
+}
+
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    color: azure;
+    size: 20px;
+}
+
+#end-line{
+    color: #ffffff;
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+#main-content {
+    padding: 50px;
+    font-family: "arial";
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+#heading {
+    color: #666666;
+    font-size: 50px;
+    align-items: center;
+}
+
+#text {
+    color: #ffffff;
+    font-size: 24px;
+    align-items: center;
+}
+#description-text{
+    font-size: 24px;
+    display: inline-flex;
+    height: 400px;
+    width: 400px;
+}

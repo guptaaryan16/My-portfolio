@@ -17,5 +17,5 @@ jobs:
       - uses: EndBug/discuss-on-discord@v1
         with:
           discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
-          destination: https://discord.com/channels/123456789012345678/123456789012345678
+          destination: https://discord.com/channels/1051015917712195634/1051015918202933280
           issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}`

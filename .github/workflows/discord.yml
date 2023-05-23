@@ -1,21 +1,27 @@
+name: Discord Notifications
+
 on:
   issues:
     types: [opened]
-  workflow_dispatch:
-    inputs:
-      issue_number:
-        description: 'Issue number'
-        required: true
-
-permissions:
-  issues: write
 
 jobs:
-  discord:
+  discordNotification:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: EndBug/discuss-on-discord@v1.1.0
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
-          destination: https://discord.com/channels/1051015917712195634/1051015918202933280
-          issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}`
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create Discord thread
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: <Discord Channel ID>
+        run: node create_discord_thread.js

@@ -26,5 +26,5 @@ jobs:
       - name: Create Discord thread
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-          DISCORD_CHANNEL_ID: <Discord Channel ID>
+          DISCORD_CHANNEL_ID: 1051015918202933280
         run: node create_discord_thread.js

@@ -1,29 +1,30 @@
-const axios = require('axios');
+const Discord = require('discord.js');
 
 const discordBotToken = process.env.DISCORD_BOT_TOKEN;
 const discordChannelId = process.env.DISCORD_CHANNEL_ID;
 
 async function createDiscordThread() {
+  const client = new Discord.Client();
   try {
-    const response = await axios.post(
-      `https://discord.com/api/v9/channels/${discordChannelId}/messages`,
-      {
-        content: 'A new issue has been created in the repository!',
-        type: 19,
-      },
-      {
-        headers: {
-          Authorization: `Bot ${discordBotToken}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    await client.login(discordBotToken);
+    
+    const channel = client.channels.cache.get(discordChannelId);
+    if (!channel) {
+      console.error('Invalid channel ID');
+      return;
+    }
 
-    const threadId = response.data.id;
+    const message = await channel.send('A new issue has been created in the repository!');
+    const thread = await message.startThread({
+      name: 'New Issue Discussion',
+      autoArchiveDuration: 1440, // Set thread auto-archive duration (in minutes). Use 1440 for 24 hours.
+    });
 
-    console.log(`Created a new thread in Discord with ID: ${threadId}`);
+    console.log(`Created a new thread in Discord with ID: ${thread.id}`);
   } catch (error) {
     console.error('Error creating Discord thread:', error);
+  } finally {
+    client.destroy();
   }
 }
 

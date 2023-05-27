@@ -4,7 +4,8 @@ const discordBotToken = process.env.DISCORD_BOT_TOKEN;
 const discordChannelId = process.env.DISCORD_CHANNEL_ID;
 
 async function createDiscordThread() {
-  const client = new Discord.Client();
+  const client = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_INTEGRATIONS
+,Intents.FLAGS.DIRECT_MESSAGES] });
   try {
     await client.login(discordBotToken);
     

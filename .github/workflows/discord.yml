@@ -8,18 +8,19 @@ on:
         description: 'Issue number'
         required: true
 
-
 permissions:
   issues: write
-
 
 jobs:
   discord:
     runs-on: ubuntu-latest
-    steps: if: ${{ github.event.label.name == 'help-wanted' 
-      - uses: EndBug/discuss-on-discord@v1.1.0
-        with:
-          discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
-          destination: https://discord.com/channels/1111902634220199988/1111902634220199988
-          issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}
-
+    steps:
+      - name: Check label
+        if: ${{ github.event.label.name == 'help wanted' }}
+        steps:
+          - name: Discuss on Discord
+            uses: EndBug/discuss-on-discord@v1.1.0
+            with:
+              discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
+              destination: https://discord.com/channels/1111902634220199988/1111902634220199988
+              issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}

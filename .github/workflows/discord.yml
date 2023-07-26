@@ -22,8 +22,7 @@ jobs:
         run: |
           PR_NUMBER="${{ github.event.inputs.pull_request_number || github.event.pull_request.number }}"
           PR_AUTHOR="${{ github.event.pull_request.user.login }}"
-          REPO_FULL_NAME="${{ github.repository }}"
-          MAINTAINERS=$(curl -s -H "Authorization: token ${{ secrets.REPO_TOKEN }}" "https://api.github.com/repos/$REPO_FULL_NAME/collaborators?affiliation=outside")
+          MAINTAINERS=$(curl -s -H "Authorization: token ${{ secrets.REPO_TOKEN }}" "https://api.github.com/repos/guptaaryan16/My-potfolio/collaborators?affiliation=outside")
           if echo "$MAINTAINERS" | jq -e ".[].login | select(. == \"$PR_AUTHOR\")" > /dev/null; then
             echo "PR is from a maintainer"
             echo "::set-output name=is_maintainer::true"

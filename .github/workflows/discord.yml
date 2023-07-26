@@ -1,5 +1,10 @@
+name: Discuss on Discord
+
 on:
   issues:
+    types:
+      - labeled
+  pull_request:
     types:
       - labeled
   workflow_dispatch:
@@ -7,19 +12,48 @@ on:
       issue_number:
         description: 'Issue number'
         required: true
-      
+      pull_request_number:
+        description: 'Pull request number'
+        required: true
+
 permissions:
   issues: write
+  pull-requests: write
 
 jobs:
   discord:
     runs-on: ubuntu-latest
     steps:
-      - name: Discuss on Discord
+      - name: Check if PR is from non-maintainer
+        id: check_maintainer
+        run: |
+          PR_NUMBER="${{ github.event.inputs.pull_request_number || github.event.pull_request.number }}"
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          REPO_FULL_NAME="${{ github.repository }}"
+          MAINTAINERS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/$REPO_FULL_NAME/collaborators?affiliation=outside")
+          if echo "$MAINTAINERS" | jq -e ".[].login | select(. == \"$PR_AUTHOR\")" > /dev/null; then
+            echo "PR is from a maintainer"
+            echo "::set-output name=is_maintainer::true"
+          else
+            echo "PR is from a non-maintainer"
+            echo "::set-output name=is_maintainer::false"
+          fi
+        shell: bash
+
+      - name: Discuss on Discord (Non-maintainer only)
+        if: ${{ github.event.issue }} && !${{ github.event.pull_request }} && steps.check_maintainer.outputs.is_maintainer == 'false' && contains(github.event.issue.labels.*.name, 'help wanted')
         uses: EndBug/discuss-on-discord@v1.1.0
-        if: ${{ github.event.label.name == 'help wanted' }}
         with:
-            discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
-            destination: https://discord.com/channels/1111902634220199988/1111902634220199988
-            issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}
-            issue_comment: I've just created a thread for this issue on PyTorch-Ignite Discord where you can quickly talk to the community on the topic. You can find it [here]($THREAD_LINK$)
+          discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
+          destination: ${{ secrets.DISCORD_BOT_DESTINATION }}
+          issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}
+          issue_comment: Hey 👋, I've just created a [thread]($THREAD_LINK$) for this issue on [PyTorch-Ignite Discord](https://pytorch-ignite.ai/chat) where you can quickly talk to the community on the topic.
+
+      - name: Discuss on Discord (Non-maintainer only)
+        if: ${{ github.event.pull_request }} && steps.check_maintainer.outputs.is_maintainer == 'false' && contains(github.event.pull_request.labels.*.name, 'help wanted')
+        uses: EndBug/discuss-on-discord@v1.1.0
+        with:
+          discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
+          destination: ${{ secrets.DISCORD_BOT_DESTINATION }}
+          pull_request_number: ${{ github.event.inputs.pull_request_number || github.event.pull_request.number }}
+          issue_comment: Hey 👋, I've just created a [thread]($THREAD_LINK$) for this pull request on [PyTorch-Ignite Discord](https://pytorch-ignite.ai/chat) where you can quickly talk to the community on the topic.

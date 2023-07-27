@@ -25,10 +25,17 @@ jobs:
       - name: Check if PR is from non-maintainer
         id: check_maintainer
         run: |
+          # Using https://docs.github.com/en/free-pro-team@latest/rest/collaborators/collaborators?apiVersion=2022-11-28#check-if-a-user-is-a-repository-collaborator
+
           PR_NUMBER="${{ github.event.inputs.pull_request_number || github.event.pull_request.number }}"
-          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
-          MAINTAINERS=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/collaborators?affiliation=outside")
-          if echo "$MAINTAINERS" | jq -e ".[].login | select(. == \"$PR_AUTHOR\")" > /dev/null; then
+          
+          GITHUB_API = $(curl -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              'https://api.github.com/repos/${{ github.repository }}/collaborators/${{ github.event.pull_request.user.login }}')
+          
+          if [ $GITHUB_API == "204" ]; then
             echo "PR is from a maintainer"
             echo "::set-output name=is_maintainer::true"
           else

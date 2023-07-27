@@ -38,12 +38,12 @@ jobs:
         shell: bash
 
       - name: "Discuss on Discord-Issues"
-        if: ${{ github.event.issue }} && !${{ github.event.pull_request }} && contains(github.event.issue.labels.*.name, 'help wanted')
+        if: ${{ github.event.issue }} && contains(github.event.issue.labels.*.name, 'help wanted')
         uses: EndBug/discuss-on-discord@v1.1.0
         with:
           discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
           destination: https://discord.com/channels/1111902634220199988/1111902634220199988
-          issue-number: ${{ github.event.inputs.issue_number || github.event.issue.number }}
+          issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}
           issue_comment: Hey 👋, I've just created a [thread]($THREAD_LINK$) for this issue on [PyTorch-Ignite Discord](https://pytorch-ignite.ai/chat) where you can quickly talk to the community on the topic.
 
       - name: "Discuss on Discord-PR (Non-maintainer only)"
@@ -52,6 +52,6 @@ jobs:
         with:
           discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
           destination: https://discord.com/channels/1111902634220199988/1111902634220199988
-          issue-number: ${{ github.event.inputs.pull_request_number || github.event.pull_request.number }}
+          issue_number: ${{ github.event.inputs.pull_request_number || github.event.pull_request.number }}
           issue_comment: Hey 👋, I've just created a [thread]($THREAD_LINK$) for this pull request on [PyTorch-Ignite Discord](https://pytorch-ignite.ai/chat) where you can quickly talk to the community on the topic.
 

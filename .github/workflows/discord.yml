@@ -4,19 +4,14 @@ on:
   issues:
     types:
       - labeled
-  pull_request:
-    types:
-      - labeled
   workflow_dispatch:
     inputs:
       issue_number:
         description: 'Issue number'
-      pull_request_number:
-        description: 'Pull request number'
+        required: true
 
 permissions:
   issues: write
-  pull-requests: write
 
 jobs:
   check-label:
@@ -24,19 +19,10 @@ jobs:
     steps:
   
       - name: "Discuss on Discord-Issues"
-        if: ${{ github.event.name }} == 'issue'  && ${{ github.event.label.name == 'help wanted' }}
+        if: ${{ github.event.label.name == 'help wanted' }}
         uses: EndBug/discuss-on-discord@v1.1.0
         with:
           discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
           destination: https://discord.com/channels/1111902634220199988/1111902634220199988
           issue_number: ${{ github.event.inputs.issue_number || github.event.issue.number }}
           issue_comment: Hey 👋, I've just created a [thread](https://pytorch-ignite.ai/chat) for this issue on PyTorch-Ignite Discord where you can quickly talk to the community on the topic.
-
-      - name: "Discuss on Discord-PR (Non-maintainer only)"
-        if: ${{ github.event.name }} == 'pull_request'  && ${{ github.event.label.name == 'help wanted' }}
-        uses: EndBug/discuss-on-discord@v1.1.0
-        with:
-          discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
-          destination: https://discord.com/channels/1111902634220199988/1111902634220199988
-          issue_number: ${{ github.event.inputs.pull_request_number || github.event.pull_request.number }}
-          issue_comment: Hey 👋, I've just created a [thread](https://pytorch-ignite.ai/chat) for this pull request on PyTorch-Ignite Discord where you can quickly talk to the community on the topic.

@@ -22,29 +22,9 @@ jobs:
   check-label:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if already labeled
-        id: check-labeled
-        run: |
-          echo '{"labeled_issues": [], "labeled_pull_requests": []}' > labeled_data.json
-          if [ -f "${{ github.workspace }}/labeled_data.json" ]; then
-            mv "${{ github.workspace }}/labeled_data.json" labeled_data.json
-          fi
-
-          jq --arg issue_number "${{ github.event.issue.number }}" \
-             --arg pr_number "${{ github.event.pull_request.number }}" \
-             '.labeled_issues |= . + ($issue_number | tonumber) | .labeled_pull_requests |= . + ($pr_number | tonumber)' \
-             labeled_data.json > labeled_data_updated.json
-
-          mv labeled_data_updated.json "${{ github.workspace }}/labeled_data.json"
-
-          labeled_issues=$(jq '.labeled_issues | length' "${{ github.workspace }}/labeled_data.json")
-          labeled_prs=$(jq '.labeled_pull_requests | length' "${{ github.workspace }}/labeled_data.json")
-
-          echo "::set-output name=labeled_issues::$labeled_issues"
-          echo "::set-output name=labeled_prs::$labeled_prs"
-
+  
       - name: "Discuss on Discord-Issues"
-        if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'help wanted') && steps.check-labeled.outputs.labeled_issues == 1
+        if: github.event_name == 'issues' && ${{ github.event.label.name == 'help wanted' }}
         uses: EndBug/discuss-on-discord@v1.1.0
         with:
           discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
@@ -53,7 +33,7 @@ jobs:
           issue_comment: Hey 👋, I've just created a [thread](https://pytorch-ignite.ai/chat) for this issue on PyTorch-Ignite Discord where you can quickly talk to the community on the topic.
 
       - name: "Discuss on Discord-PR (Non-maintainer only)"
-        if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'help wanted') && steps.check-labeled.outputs.labeled_prs == 1
+        if: github.event_name == 'pull_request' && ${{ github.event.label.name == 'help wanted' }}
         uses: EndBug/discuss-on-discord@v1.1.0
         with:
           discord_bot_token: ${{ secrets.DISCORD_BOT_TOKEN }}
